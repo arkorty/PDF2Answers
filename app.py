@@ -2,6 +2,10 @@ from flask import Flask, render_template
 from views import views
 import os
 from flask_session import Session  # Add this import
+from dotenv import load_dotenv
+
+# Load environment variables from .flaskenv
+load_dotenv('.flaskenv')
 
 app = Flask(__name__)
 app.register_blueprint(views, url_prefix="/")
@@ -22,4 +26,4 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8080)
+    app.run(debug=False, port=8083)
