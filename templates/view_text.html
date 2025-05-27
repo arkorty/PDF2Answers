@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Text - {{ pdf_name }}</title>
+    {% extends 'layout.html' %}
+
+{% block title %}View Text | {{ pdf_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .text-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    
+    .stat-card {
+        flex: 1;
+        min-width: 100px;
+        background-color: #f8f9fa;
+        border-radius: 6px;
+        padding: 10px;
+        text-align: center;
+    }
+    
+    .stat-value {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+    
+    .stat-label {
+        font-size: 0.8rem;
+        color: var(--light-text);
+    }
+    
+    .text-container {
+        height: 500px;
+        overflow-y: auto;
+        padding: 25px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        font-family: 'Roboto Mono', monospace;
+        line-height: 1.5;
+        font-size: 14px;
+    }
+    
+    .text-container pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        margin: 0;
+        padding: 0;
+        overflow-x: visible; /* Prevents horizontal scrollbar */
+        width: 100%;
+    }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+{% endblock %}
+</head>
+<body>
+    <div class="navigation">
+        <a href="{{ url_for('views.upload_file') }}">← Back to Upload</a>
+        <a href="{{ url_for('views.ask_question') }}">Ask Questions →</a>
+    </div>
+
+    <h1>Extracted Text from {{ pdf_name }}</h1>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="messages">
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    {% block content %}
+    <div class="app-card">
+        <div class="text-container">
+            <pre>{{ pdf_text }}</pre>
+        </div>
+        
+        <div class="text-stats">
+            <div class="stat-card">
+                <div class="stat-value">{{ pdf_text|length }}</div>
+                <div class="stat-label">Characters</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ pdf_text.split()|length }}</div>
+                <div class="stat-label">Words</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ pdf_text.count('\n') }}</div>
+                <div class="stat-label">Lines</div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 20px; display: flex; gap: 10px;">
+            <a href="{{ url_for('views.ask_question') }}" class="app-btn">
+                <i class="fas fa-question-circle"></i> Ask Questions
+            </a>
+            <a href="{{ url_for('views.upload_file') }}" class="app-btn app-btn-secondary">
+                <i class="fas fa-upload"></i> Upload Different PDF
+            </a>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

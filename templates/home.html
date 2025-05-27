@@ -1,0 +1,124 @@
+{% extends 'layout.html' %}
+
+{% block title %}Home | PDF2Answers{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .hero p {
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto;
+        color: var(--light-text);
+    }
+    
+    .features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin: 40px 0;
+    }
+    
+    .feature-card {
+        flex: 1;
+        min-width: 250px;
+        padding: 25px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        transition: transform 0.3s;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+    
+    .feature-icon i {
+        font-size: 24px;
+        color: white;
+    }
+    
+    .get-started {
+        text-align: center;
+        margin-top: 40px;
+    }
+    
+    .get-started .app-btn {
+        font-size: 1.1rem;
+        padding: 12px 30px;
+    }
+    
+    .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 20px;
+        font-size: 0.9rem;
+    }
+    
+    .status-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: var(--success);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <p>Upload PDF documents, extract text, and ask questions about the content using Google's Gemini AI model.</p>
+    <div class="status-indicator">
+        <span class="status-dot"></span>
+        <span>Server is running</span>
+    </div>
+</div>
+
+<div class="features">
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-file-upload"></i>
+        </div>
+        <h3>Upload PDFs</h3>
+        <p>Upload PDF documents up to 16MB in size. The system extracts text content for processing.</p>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-file-alt"></i>
+        </div>
+        <h3>View Text</h3>
+        <p>See the extracted text with word and character statistics to verify content quality.</p>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-robot"></i>
+        </div>
+        <h3>Ask Questions</h3>
+        <p>Ask any question about the document content and get AI-powered answers using Gemini.</p>
+    </div>
+</div>
+
+<div class="app-card" style="text-align: center;">
+    <p>Ready to start? Upload your first PDF document!</p>
+    <a href="{{ url_for('views.upload_file') }}" class="app-btn">
+        <i class="fas fa-arrow-right"></i> Get Started
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ask Questions about PDF</title>
+    {% extends 'layout.html' %}
+
+    {% block title %}Ask Questions | {{ pdf_name }}{% endblock %}
+
+    {% block extra_css %}
+    <style>
+        .pdf-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .pdf-icon {
+            color: #FF5722;
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+        
+        .question-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 100px;
+            transition: border-color 0.3s;
+            margin-bottom: 15px;
+        }
+        
+        .question-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+        }
+        
+        .question-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0 20px 0;
+        }
+        
+        .example-question {
+            background: #EEF2FF;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .example-question:hover {
+            background: #DBEAFE;
+        }
+        
+        .answer-container {
+            margin-top: 20px;
+            background-color: #F8FAFC;
+        }
+        
+        .answer-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .answer-icon {
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        .answer-content {
+            line-height: 1.8;
+            font-size: 17px;
+        }
+    </style>
+    {% endblock %}
+
+    {% block content %}
+    <div class="app-card">
+        <div class="pdf-info">
+            <i class="fas fa-file-pdf pdf-icon"></i>
+            <div>
+                
+                <a href="{{ url_for('views.view_text') }}">
+                    <h5 style="margin: 0;">{{ pdf_name }}</h5>
+                </a>
+            </div>
+        </div>
+        
+        <form class="question-form" method="post">
+            <label for="question"><strong>Your Question:</strong></label>
+            <textarea name="question" id="question" class="question-input" placeholder="Ask a question about the document content..." required>{{ request.form.get('question', '') }}</textarea>
+            
+            <p><small>Try some example questions:</small></p>
+            <div class="question-examples">
+                <button type="button" class="example-question">What is the main topic?</button>
+                <button type="button" class="example-question">Summarize in 3 bullet points</button>
+                <button type="button" class="example-question">What are the key findings?</button>
+                <button type="button" class="example-question">Explain the methodology used</button>
+            </div>
+            
+            <button type="submit" class="app-btn">
+                <i class="fas fa-paper-plane"></i> Ask
+            </button>
+        </form>
+    </div>
+
+    {% if answer %}
+    <div class="app-card answer-container">
+        <div class="answer-header">
+            <div class="answer-icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <h3>Answer</h3>
+        </div>
+        <div class="answer-content">
+            {{ answer|safe }}
+        </div>
+    </div>
+    {% endif %}
+    {% endblock %}
+
+    {% block extra_js %}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const questionInput = document.getElementById('question');
+        const exampleButtons = document.querySelectorAll('.example-question');
+        
+        exampleButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                questionInput.value = this.textContent;
+                questionInput.focus();
+            });
+        });
+    });
+    </script>
+    {% endblock %}
+</body>
+</html>

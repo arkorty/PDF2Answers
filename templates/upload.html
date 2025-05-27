@@ -1,0 +1,126 @@
+{% extends 'layout.html' %}
+
+{% block title %}Upload PDF | PDF2Answers{% endblock %}
+
+{% block extra_css %}
+<style>
+    .upload-container {
+        text-align: center;
+    }
+    
+    .file-upload {
+        position: relative;
+        display: inline-block;
+        margin: 25px 0;
+    }
+    
+    .file-upload-input {
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+    
+    .file-upload-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 200px;
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s;
+    }
+    
+    .file-upload-label:hover {
+        border-color: var(--primary-color);
+    }
+    
+    .file-icon {
+        font-size: 3rem;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+    }
+    
+    .selected-file {
+        margin-top: 15px;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+    
+    .troubleshooting {
+        margin-top: 30px;
+        text-align: left;
+    }
+    
+    .troubleshooting h4 {
+        margin-bottom: 15px;
+        color: var(--secondary-color);
+    }
+    
+    .troubleshooting ul {
+        padding-left: 20px;
+    }
+    
+    .troubleshooting li {
+        margin-bottom: 8px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="app-card">
+    <div class="upload-container">
+        <h3>Select a PDF to Process</h3>
+        <p class="text-muted">Upload your PDF to extract text and ask questions about its contents</p>
+        
+        <form method="post" enctype="multipart/form-data">
+            <div class="file-upload">
+                <label class="file-upload-label">
+                    <i class="fas fa-file-pdf file-icon"></i>
+                    <span>Drop your PDF file here<br>or click to select</span>
+                    <input type="file" name="pdf_file" accept=".pdf" required class="file-upload-input">
+                </label>
+            </div>
+            <div class="selected-file" id="file-name">No file selected</div>
+            <button type="submit" class="app-btn mt-3">
+                <i class="fas fa-upload"></i> Upload & Process
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="app-card troubleshooting">
+    <h4><i class="fas fa-info-circle"></i> Tips & Troubleshooting</h4>
+    <ul>
+        <li>Make sure you select a valid PDF file with text content (not scanned images)</li>
+        <li>PDF size should be less than 16MB for best performance</li>
+        <li>If upload fails, try a different PDF or one with less content</li>
+        <li>After upload, you can <a href="{{ url_for('views.view_text') }}">view the extracted text</a> to verify content</li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.querySelector('.file-upload-input');
+    const fileName = document.getElementById('file-name');
+    
+    fileInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            fileName.textContent = this.files[0].name;
+            fileName.style.display = 'block';
+        } else {
+            fileName.textContent = 'No file selected';
+        }
+    });
+});
+</script>
+{% endblock %}
