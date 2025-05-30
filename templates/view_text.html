@@ -52,7 +52,7 @@
         word-wrap: break-word;
         margin: 0;
         padding: 0;
-        overflow-x: visible; /* Prevents horizontal scrollbar */
+        overflow-x: visible;
         width: 100%;
     }
 </style>
@@ -61,8 +61,8 @@
 </head>
 <body>
     <div class="navigation">
-        <a href="{{ url_for('views.upload_file') }}">← Back to Upload</a>
-        <a href="{{ url_for('views.ask_question') }}">Ask Questions →</a>
+        <a href="{{ url_for('router.upload_file') }}">← Back to Upload</a>
+        <a href="{{ url_for('router.ask_question') }}">Ask Questions →</a>
     </div>
 
     <h1>Extracted Text from {{ pdf_name }}</h1>
@@ -101,10 +101,10 @@
         </div>
         
         <div style="margin-top: 20px; display: flex; gap: 10px;">
-            <a href="{{ url_for('views.ask_question') }}" class="app-btn">
+            <a href="{{ url_for('router.ask_question') }}" class="app-btn">
                 <i class="fas fa-question-circle"></i> Ask Questions
             </a>
-            <a href="{{ url_for('views.upload_file') }}" class="app-btn app-btn-secondary">
+            <a href="{{ url_for('router.upload_file') }}" class="app-btn app-btn-secondary">
                 <i class="fas fa-upload"></i> Upload Different PDF
             </a>
         </div>

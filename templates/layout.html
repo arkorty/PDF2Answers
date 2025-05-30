@@ -79,7 +79,6 @@
             color: var(--primary-hover);
         }
         
-        /* Flash messages styling */
         .flash-messages {
             margin-bottom: 20px;
         }
@@ -163,20 +162,20 @@
     <div class="app-container">
         <header class="app-header">
             <nav class="navbar">
-                <a href="{{ url_for('views.home') }}" class="navbar-brand">
+                <a href="{{ url_for('router.home') }}" class="navbar-brand">
                     <i class="fa-solid fa-book"></i> PDF2Answers
                 </a>
                 <div class="nav-links">
-                    <a href="{{ url_for('views.home') }}" class="{{ 'active' if request.endpoint == 'views.home' else '' }}">
+                    <a href="{{ url_for('router.home') }}" class="{{ 'active' if request.endpoint == 'router.home' else '' }}">
                         <i class="fas fa-home"></i> Home
                     </a>
-                    <a href="{{ url_for('views.upload_file') }}" class="{{ 'active' if request.endpoint == 'views.upload_file' else '' }}">
+                    <a href="{{ url_for('router.upload_file') }}" class="{{ 'active' if request.endpoint == 'router.upload_file' else '' }}">
                         <i class="fas fa-file-upload"></i> Upload
                     </a>
-                    <a href="{{ url_for('views.view_text') }}" class="{{ 'active' if request.endpoint == 'views.view_text' else '' }}">
+                    <a href="{{ url_for('router.view_text') }}" class="{{ 'active' if request.endpoint == 'router.view_text' else '' }}">
                         <i class="fas fa-file-alt"></i> View Text
                     </a>
-                    <a href="{{ url_for('views.ask_question') }}" class="{{ 'active' if request.endpoint == 'views.ask_question' else '' }}">
+                    <a href="{{ url_for('router.ask_question') }}" class="{{ 'active' if request.endpoint == 'router.ask_question' else '' }}">
                         <i class="fas fa-question-circle"></i> Ask
                     </a>
                 </div>
